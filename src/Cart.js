@@ -31,6 +31,7 @@ const Cart = ({ cart, removeFromCart }) => {
     setSelectAll(isChecked);
   };
 
+  // Cập nhật selectedItems khi cart thay đổi
   useEffect(() => {
     const newSelectedItems = {};
     cart.forEach(item => {
@@ -38,22 +39,24 @@ const Cart = ({ cart, removeFromCart }) => {
     });
     setSelectedItems(newSelectedItems);
     setSelectAll(cart.every(item => newSelectedItems[item.id]));
-  }, [cart, selectedItems]);
+  }, [cart]); // Chỉ phụ thuộc vào cart
 
   return (
     <div className="cart-page">
       <div className="cart-items">
         <h2>Cart Items</h2>
         {cart.length > 0 && (
-          <label>
-            <input 
-              type="checkbox" 
-              onChange={handleSelectAll} 
-              checked={selectAll} 
-              aria-label="Select all items"
-            />
-            Select All
-          </label>
+          <div>
+            <label>
+              <input 
+                type="checkbox" 
+                onChange={handleSelectAll} 
+                checked={selectAll} 
+                aria-label="Select all items"
+              />
+              Select All
+            </label>
+          </div>
         )}
         {cart.length === 0 ? (
           <p>Your cart is empty.</p>
@@ -104,7 +107,7 @@ const Cart = ({ cart, removeFromCart }) => {
           {cart.map(item => (
             selectedItems[item.id] ? (
               <p key={item.id}>
-                {item.name} - Price: ${(item.price * item.quantity).toFixed(2)} (Quantity: {item.quantity})
+                {item.name}- Price: {item.price}$ * {item.quantity} = ${(item.price * item.quantity).toFixed(2)}
               </p>
             ) : null
           ))}

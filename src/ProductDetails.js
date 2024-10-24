@@ -1,10 +1,10 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import './App.css';
+import React from "react";
+import { useParams } from "react-router-dom";
+import "./App.css";
 
 const ProductDetails = ({ dbData, addToCart }) => {
   const { id } = useParams();
-  const product = dbData.find(item => item.id === parseInt(id));
+  const product = dbData.find((item) => item.id === parseInt(id));
 
   if (!product) {
     return <p>Product not found!</p>;
@@ -12,16 +12,15 @@ const ProductDetails = ({ dbData, addToCart }) => {
 
   return (
     <div className="product-details">
-
-      <div className='product-upperbanner'>
-        <h1 className='product-name'>{product.name}</h1>
-        <div className='product-handle'>
-            <p>Price: ${product.price}</p>
-            <button onClick={() => addToCart(product)} className="btn-add">
-                Add to Cart <span>${product.price}</span>
-            </button>
+      <div className="product-upperbanner">
+        <h1 className="product-name">{product.name}</h1>
+        <div className="product-handle">
+          <p>Price: ${product.price}</p>
+          <button onClick={() => addToCart(product)} className="btn-add">
+            Add to Cart <span>${product.price}</span>
+          </button>
         </div>
-    </div>
+      </div>
 
       <div className="product-description">
         <h3>Product Details</h3>
