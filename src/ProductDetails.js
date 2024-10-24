@@ -4,7 +4,9 @@ import "./App.css";
 
 const ProductDetails = ({ dbData, addToCart }) => {
   const { id } = useParams();
-  const product = dbData.find((item) => item.id === parseInt(id));
+  const product = dbData.find((item) => item.id === id); //id là string chứ không phải int ạ :)
+
+  console.log("Found Product:", product);
 
   if (!product) {
     return <p>Product not found!</p>;

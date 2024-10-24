@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Link,
-  BrowserRouter,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Cart from "./Cart";
 import ProductDetails from "./ProductDetails";
+import ProductItem from "./ProductItem";
 import "./App.css";
 import axios from "axios";
-import ProductItem from "./ProductItem";
 
 const App = () => {
   const [cart, setCart] = useState([]);
@@ -22,7 +16,7 @@ const App = () => {
         const response = await axios.get("http://localhost:3000/products");
         setDbData(response.data);
       } catch (error) {
-        console.error("Gửi cấp cứu:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
@@ -62,7 +56,7 @@ const App = () => {
   };
 
   return (
-    <BrowserRouter>
+    <Router>
       <div className="app">
         <nav className="navbar">
           <Link to="/" className="navbar-brand">
@@ -74,7 +68,7 @@ const App = () => {
         </nav>
 
         <div className="container">
-          <Route>
+          <Routes>
             <Route
               path="/"
               element={
@@ -83,10 +77,14 @@ const App = () => {
                   <div className="product-list">
                     {dbData.length > 0 ? (
                       dbData.map((product) => (
-                        <ProductItem id={product.id} key={product.id} />
+                        <ProductItem
+                          key={product.id}
+                          product={product}
+                          addToCart={addToCart}
+                        />
                       ))
                     ) : (
-                      <p> '( ˶°ㅁ°) ...</p>
+                      <p>'( ˶°ㅁ°) ...</p>
                     )}
                   </div>
                 </div>
@@ -100,10 +98,10 @@ const App = () => {
               path="/product/:id"
               element={<ProductDetails dbData={dbData} addToCart={addToCart} />}
             />
-          </Route>
+          </Routes>
         </div>
       </div>
-    </BrowserRouter>
+    </Router>
   );
 };
 

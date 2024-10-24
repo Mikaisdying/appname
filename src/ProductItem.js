@@ -1,19 +1,10 @@
-import { BrowserRouter as Link } from "react-router-dom";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
-import addToCart from "./App";
+import "./App.css";
 
-const ProductItem = ({ id }) => {
-  const [product, setProduct] = useState({});
-
-  useEffect(() => {
-    if (!id) return;
-
-    const response = axios.get(`http://localhost:3000/products}`);
-    setProduct(response.data);
-  }, []);
+const ProductItem = ({ product, addToCart }) => {
   return (
     <div className="product-card">
       <h5>{product.name}</h5>
@@ -22,7 +13,7 @@ const ProductItem = ({ id }) => {
         <FontAwesomeIcon icon={faCartShopping} />
       </button>
 
-      <Link to={`/product/${id}`}>
+      <Link to={`/product/${product.id}`}>
         <button className="btn-details btn-add">View Details</button>
       </Link>
     </div>
